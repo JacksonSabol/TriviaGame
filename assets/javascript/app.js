@@ -56,3 +56,30 @@ var answersArray {
     }
 };
 
+// Assign tracking variables
+var questionIndex;
+var correctAnswerId;
+var decrement;
+var timer;
+var correct = 0;
+var incorrect = 0;
+
+// Set listener for the click of the 'Begin Game' button to execute the beginGame function
+$("button").on("click", beginGame);
+
+// Function for the start of a new game
+function beginGame() {
+	// Reset the question index to the first question (index 0)
+	questionIndex = 0;
+	// Reset number of correctly/incorrectly answered questions to 0
+	correct = 0;
+	incorrect = 0;
+	// Clear the start box containing the instructions and 'Begin Game' button
+	$("#start").empty();
+	// Call the function for a new question
+	newQuestion();
+}
+
+function newQuestion() {
+    //
+}
