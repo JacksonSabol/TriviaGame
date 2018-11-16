@@ -45,3 +45,11 @@ h2, h3, h4, h5 {
      background: -moz-linear-gradient(90deg, rgb(56,139,172), rgb(54, 54, 54), rgb(56,139,172));
      background: -webkit-linear-gradient(left, rgb(56,139,172), rgb(54, 54, 54), rgb(56,139,172));
  }
+
+ .begin-game:hover {
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";       /* IE 8 */
+    filter: alpha(opacity=80);  /* IE 5-7 */
+    -moz-opacity: 0.80;          /* Netscape */
+    -khtml-opacity: 0.80;        /* Safari 1.x */
+    opacity: 0.80;               /* Good browsers */
+}
