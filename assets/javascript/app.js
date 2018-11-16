@@ -1,71 +1,73 @@
 // Array of questions
+// Change to nested arrays of questions and answers with the index location of the correct answer listed at the fifth index
+// This will allow me to have different locations for the correct answer when generating the question/answers later
 var questionsArray = [
-    "How old is our solar system?", // 1
-    "How far away is the Earth from the Sun?", // 2
-    "How many planets are in our solar system?", // 3
-    "What is the name of the star at the center of our closest, neighboring solar system?", // 4
-    "What is the brightest star in the night sky?", // 5
-    "How long does it take Mercury to complete one revolution around our Sun?", // 6
-    "What is the largest planet, in terms of volume, in our solar system?", // 7
-    "What are the names of the 2 moons orbitting Mars?", // 8
-    "How many principal rings does Neptune have?", // 9
-    "Which one of Jupiter's moons has liquid water?" //10
+    ["How old is our solar system?", "10,000 years old", "4.6 billion years old", "4.6 million years old", "13.6 billion years old", "2"], // Correct answer at index 2
+    ["How far away is the Earth from the Sun?", "93 billion miles", "238,900 miles", "33.9 million miles", "93 million miles", "4"], // Correct answer at index 4
+    ["How many planets are in our solar system?", "8 planets", "9 planets", "10 planets", "7 planets", "1"], // Correct answer at index 1
+    ["What is the name of the star at the center of our closest, neighboring solar system?", "Polaris", "Betelgeuse", "Proxima Centauri", "Rigel", "3"], // Correct answer at index 3
+    ["What is the brightest star in the night sky?", "Arcturus", "Canopus", "Altair", "Sirius", "4"], // Correct answer at index 4
+    ["How long does it take Mercury to complete one revolution around our Sun?", "165 years", "88 days", "225 days", "687 days", "2"], // Correct index at index 2
+    ["What is the largest planet, in terms of volume, in our solar system?", "Saturn", "Neptune", "Jupiter", "Uranus", "3"], // Correct index at index 3
+    ["What are the names of the 2 moons orbitting Mars?", "Phobos and Deimos", "Pheobe and Deimos", "Phobos and Io", "Pheobe and Dione", "1"], // Correct index at index 1
+    ["How many principal rings does Neptune have?", "0", "3", "1", "5", "4"], // Correct answer at index 4
+    ["Which one of Jupiter's moons has liquid water?", "Io", "Callisto", "Europa", "Elara", "3"] // Correct answer at index 3
 ];
 
 // Array of answers
-var answersArray = {
-    questionOne: {
-        correctAnswer: "4.6 billion years old",
-        incorrectAnswers: ["10,000 years old", "4.6 million years old", "13.6 billion years old"]
-    },
-    questionTwo: {
-        correctAnswer: "93 million miles",
-        incorrectAnswers: ["93 billion miles", "238,900 miles", "33.9 million miles"]
-    },
-    questionThree: {
-        correctAnswer: "8 planets",
-        incorrectAnswers: ["9 planets", "10 planets", "7 planets"]
-    },
-    questionFour: {
-        correctAnswer: "Proxima Centauri",
-        incorrectAnswers: ["Polaris", "Betelgeuse", "Rigel"]
-    },
-    questionFive: {
-        correctAnswer: "Sirius",
-        incorrectAnswers: ["Arcturus", "Canopus", "Altair"]
-    },
-    questionSix: {
-        correctAnswer: "88 days",
-        incorrectAnswers: ["165 years", "225 days", "687 days"]
-    },
-    questionSeven: {
-        correctAnswer: "Jupiter",
-        incorrectAnswers: ["Saturn", "Neptune", "Uranus"]
-    },
-    questionEight: {
-        correctAnswer: "Phobos and Deimos",
-        incorrectAnswers: ["Pheobe and Deimos", "Phobos and Io", "Pheobe and Dione"]
-    },
-    questionNine: {
-        correctAnswer: "5",
-        incorrectAnswers: ["0", "3", "1"]
-    },
-    questionTen: {
-        correctAnswer: "Europa",
-        incorrectAnswers: ["Io", "Callisto", "Elara"]
-    }
-};
+// var answersArray = {
+//     questionOne: {
+//         correctAnswer: ,
+//         incorrectAnswers: []
+//     },
+//     questionTwo: {
+//         correctAnswer: ,
+//         incorrectAnswers: []
+//     },
+//     questionThree: {
+//         correctAnswer: ,
+//         incorrectAnswers: []
+//     },
+//     questionFour: {
+//         correctAnswer: ,
+//         incorrectAnswers: []
+//     },
+//     questionFive: {
+//         correctAnswer: ,
+//         incorrectAnswers: []
+//     },
+//     questionSix: {
+//         correctAnswer: ,
+//         incorrectAnswers: []
+//     },
+//     questionSeven: {
+//         correctAnswer: ,
+//         incorrectAnswers: []
+//     },
+//     questionEight: {
+//         correctAnswer: ,
+//         incorrectAnswers: []
+//     },
+//     questionNine: {
+//         correctAnswer: ,
+//         incorrectAnswers: []
+//     },
+//     questionTen: {
+//         correctAnswer: ,
+//         incorrectAnswers: []
+//     }
+// };
 
 // Assign tracking variables
 var questionIndex;
-var correctAnswerId;
+var correctAnswerIndex;
 var decrement;
 var timer;
 var correct = 0;
 var incorrect = 0;
 
 // Set listener for the click of the 'Begin Game' button to execute the beginGame function
-$("button").on("click", beginGame);
+$(".begin-game").on("click", beginGame);
 
 // Function for the start of a new game
 function beginGame() {
@@ -109,25 +111,38 @@ function newQuestion() {
     }
     // Set else condition to create a new question with choices
     else {
-        // Assign question variable to store result of incrementing index of the questions array
-        var question = questionsArray[questionIndex];
+        // Assign question variable to store result of incrementing index of the questions array - all of the questions are at index 0 of the nested arrays
+        var question = questionsArray[questionIndex][0];
         // Console log for testing
         console.log(question);
         // Append question to the #question div
         $("#question").html("<h3>" + question + "</h3>");
 
         // Concatenate the correct answer with the incorrect answers and assign it to a variable to be appended to the HTML 
-        var answers = answersArray[questionIndex].correctAnswer + answersArray[questionIndex].incorrectAnswers[0] + answersArray[questionIndex].incorrectAnswers[1] + answersArray[questionIndex].incorrectAnswers[2];
-        // Console log for testing
-        console.log(answers);
-        // Append all the possible choices to the #choices div
-        $("#choices").append("<h3>" + answers + "</h3><br>");
+        // var answers = answersArray[questionIndex].correctAnswer + answersArray[questionIndex].incorrectAnswers[0] + answersArray[questionIndex].incorrectAnswers[1] + answersArray[questionIndex].incorrectAnswers[2];
 
-        // Future problems:
-        // I need to assign each choice a unique value so I know which answer was chosen
-        // This is going to display the correct answer in the first position every time, which isn't ideal
+        // Clear #choices div to make room for new question choices
+        // $("#choices").empty();
+        // Iterate through the nested arrays of the questionsArray, limiting the loop to indices that aren't the question or the correctAnswerIndex, to generate choices for the player
+        for (var i = 1; i < (questionsArray[questionIndex].length - 1); i++) {
+            // Assign a variable to create a div for each answer choice with a unique 'value' - we can add an event listener to pull that value for comparison to the correctAnswerIndex later
+            // This just appends 'object Object' so I may  to try stringify
+            // var answers = $("<div>").attr("class", "choice-box", "value", i).text(questionsArray[questionIndex][i]);
 
-    };
+            // Assign a variable to hold the answers we pull by iterating through the questionsArray
+            var answers = questionsArray[questionIndex][i];
+            // Console log answers for testing
+            console.log(answers);
+            
+            // Console log shows that the choices are being assigned to the answers variable, but they're not being appended to the HTML, so gonna debug that after class
+
+            // Append the answers to divs with the choices to the #choices div with a class for styling and a value for the event listener
+            $("#choices").html("<div class='choice-box' value='" + i + "'/>" + answers + "</div><br>");
+
+            // Append our newly created divs and the choices to the #choices div with a class for styling
+            // $("#choices").append("<h3>" + answers + "</h3>");
+        };
+    
     // Set decrement variable to 15 (seconds) for each question
     decrement = 15;
     // Assign the setInterval for the countdown function so it decrements 'decrement' every 1 second
@@ -136,6 +151,7 @@ function newQuestion() {
     $("#time-remaining").html("<h3>Time Remaining: <strong>" + decrement + "</strong></h3>"); // this may be redundant and cause problems but we'll see
     // Console log for testing
     console.log(decrement);
+    }
 }
 
 // Function set a time limit of 15 seconds on each question
@@ -169,14 +185,18 @@ function countdown() {
 function displayAnswer() {
     // Clear the #time-remaining div for when this function is called from a correct choice - I may just make a separate function for this to stop the timer like in the demo as opposed to clearing it
     $("#time-remaining").empty();
-    // Reassign the correctAnswerId variable to be equal to the correct answer for the corresponding question
-    correctAnswerId = answersArray[questionIndex].correctAnswer;
+    // Reassign the correctAnswerIndex variable to be equal to the correct answer for the corresponding question - the index location inside of each nested array indicating the index location of the correct answer is always at index 5
+    correctAnswerIndex = questionsArray[questionIndex][5];
+    // Convert to an integer to use as an index
+    correctAnswerIndex = parseInt(correctAnswerIndex);
+    // Assign a variable to the text of the correct answer using the correct answer index in the respective nested array
+	var correctAnswerText = questionsArray[questionIndex][correctAnswerIndex];
     // Assign a variable to create an h2 tag highlighting the correct answer
-    var correctAnswerDisplayed = $("<h2>").text("The correct answer was: " + correctAnswerId);
+    var correctAnswerDisplayed = $("<h2>").text("The correct answer was: " + correctAnswerText);
     // Append the h2 tags and correct answer to the #start div
     $("#start").append(correctAnswerDisplayed);
     // Increase the question index by 1 to move on to the next element (question) in the questions and answers arrays
     questionIndex++;
     // Automatically move to the next question after 4 seconds
     setTimeout(newQuestion, 4000);
-};
+}
