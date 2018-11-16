@@ -13,7 +13,7 @@ var questionsArray = [
 ];
 
 // Array of answers
-var answersArray {
+var answersArray = {
     questionOne: {
         correctAnswer: "4.6 billion years old",
         incorrectAnswers: ["10,000 years old", "4.6 million years old", "13.6 billion years old"]
@@ -80,6 +80,7 @@ function beginGame() {
     newQuestion();
 }
 
+// Function to determine if the game is over or to display the next question
 function newQuestion() {
     // Clear the start box if it contains the previous question
     $("#start").empty();
@@ -108,6 +109,74 @@ function newQuestion() {
     }
     // Set else condition to create a new question with choices
     else {
-        //
+        // Assign question variable to store result of incrementing index of the questions array
+        var question = questionsArray[questionIndex];
+        // Console log for testing
+        console.log(question);
+        // Append question to the #question div
+        $("#question").html("<h3>" + question + "</h3>");
+
+        // Concatenate the correct answer with the incorrect answers and assign it to a variable to be appended to the HTML 
+        var answers = answersArray[questionIndex].correctAnswer + answersArray[questionIndex].incorrectAnswers[0] + answersArray[questionIndex].incorrectAnswers[1] + answersArray[questionIndex].incorrectAnswers[2];
+        // Console log for testing
+        console.log(answers);
+        // Append all the possible choices to the #choices div
+        $("#choices").append("<h3>" + answers + "</h3><br>");
+
+        // Future problems:
+        // I need to assign each choice a unique value so I know which answer was chosen
+        // This is going to display the correct answer in the first position every time, which isn't ideal
+
+    };
+    // Set decrement variable to 15 (seconds) for each question
+    decrement = 15;
+    // Assign the setInterval for the countdown function so it decrements 'decrement' every 1 second
+    timer = setInterval(countdown, 1000);
+    // Display time remaining for each question in the #time-remaining div
+    $("#time-remaining").html("<h3>Time Remaining: <strong>" + decrement + "</strong></h3>"); // this may be redundant and cause problems but we'll see
+    // Console log for testing
+    console.log(decrement);
+}
+
+// Function set a time limit of 15 seconds on each question
+function countdown() {
+    // Decrement the counting variable 'decrement'
+    decrement--;
+    // Display the time remaining in the #time-remaining div
+    $("#time-remaining").html("<h3>Time Remaining: <strong>" + decrement + "</strong></h3>");
+    // If 'decrement' is 0, the time is up
+    if (decrement === 0) {
+        // Assign a variable to create an h2 tag with the time's up text
+        var timeText = $("<h2>").text("Your Time Is Up!");
+        // Assign a variable to create an h3 tag with a mildly relevant Carl Sagan quote
+        var timeQuote = $("<h3>").text("'We make our world significant by the courage of our questions and the depth of our answers'");
+        // Append the newly created h tags to the #start div box
+        $("#start").append(timeText, timeQuote);
+        // Clear the interval to stop running the countdown function
+        clearInterval(timer);
+        // Clear the question from the #question div
+        $("#question").empty();
+        // Clear the choices from the #choices div
+        $("#choices").empty();
+        // Increase the number of questions answered incorrectly by 1
+        incorrect++;
+        // Call function to display the answer
+        displayAnswer();
     }
 }
+
+// Function to display the correct answer
+function displayAnswer() {
+    // Clear the #time-remaining div for when this function is called from a correct choice - I may just make a separate function for this to stop the timer like in the demo as opposed to clearing it
+    $("#time-remaining").empty();
+    // Reassign the correctAnswerId variable to be equal to the correct answer for the corresponding question
+    correctAnswerId = answersArray[questionIndex].correctAnswer;
+    // Assign a variable to create an h2 tag highlighting the correct answer
+    var correctAnswerDisplayed = $("<h2>").text("The correct answer was: " + correctAnswerId);
+    // Append the h2 tags and correct answer to the #start div
+    $("#start").append(correctAnswerDisplayed);
+    // Increase the question index by 1 to move on to the next element (question) in the questions and answers arrays
+    questionIndex++;
+    // Automatically move to the next question after 4 seconds
+    setTimeout(newQuestion, 4000);
+};
