@@ -16,7 +16,36 @@
 </head>
 
 <body>
-
+    <div class="container">
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8">
+                <div class="bg-opacity container-style">
+                    <h1>Cosmology Themed Trivia Game!</h1>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8">
+                <div class="bg-opacity container-style">
+                    <div id="start">
+                        <h2>Instructions</h2>
+                        <h3>Test your knowledge of the cosmos with this 10 question trivia game!</h3>
+                        <h4>Once you click the "Begin Game" button below, a question will appear in this space.</h4>
+                        <h4>You will have 15 seconds to make a decision and click on the answer.</h4>
+                        <h4>The correct answer and whether you got it right will display when your time is up or when you select an answer.</h4>
+                        <h4>A new question will load automatically and you'll have 15 seconds to answer.</h4>
+                        <button class="begin-game">Begin Game</button>
+                    </div>
+                    <span id="game-over"></span> <!-- possibly unnecessary, we'll see how it looks later -->
+                    <div class="game-content"> <!-- also potentially unncessary, we'll see how it looks later -->
+                        <h3>Time Remaining: <span id="time-remaining"><strong>....</strong></span></h3>
+                        <h3><div id="question">Question</div></h3> <!-- these will start blank I just want to visualize the page first -->
+                        <h3><div id="choices">1<br>2<br>3<br>4</div></h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="assets/javascript/app.js" type="text/javascript"></script>
 </body>
 
