@@ -133,24 +133,35 @@ function newQuestion() {
             var answers = questionsArray[questionIndex][i];
             // Console log answers for testing
             console.log(answers);
-            
+
             // Console log shows that the choices are being assigned to the answers variable, but they're not being appended to the HTML, so gonna debug that after class
 
+            // Create variable to hold the choices information - this works but it puts them all in a line and doesn't replace the existing text because of using the append method
+            var newChoiceButton = $("<button>");
+            // Add a class
+            newChoiceButton.addClass("choice-button");
+            // Added a data-attribute
+            newChoiceButton.attr("data-name", questionsArray[questionIndex][i]);
+            // Provided the initial button text
+            newChoiceButton.text(questionsArray[questionIndex][i]);
+            // Added the button to the HTML
+            $("#choices").append(newChoiceButton);
+
             // Append the answers to divs with the choices to the #choices div with a class for styling and a value for the event listener
-            $("#choices").html("<div class='choice-box' value='" + i + "'/>" + answers + "</div><br>");
+            // $("#choices").html("<div class='choice-box' value='" + i + "'/>" + answers + "</div><br>");
 
             // Append our newly created divs and the choices to the #choices div with a class for styling
             // $("#choices").append("<h3>" + answers + "</h3>");
         };
-    
-    // Set decrement variable to 15 (seconds) for each question
-    decrement = 15;
-    // Assign the setInterval for the countdown function so it decrements 'decrement' every 1 second
-    timer = setInterval(countdown, 1000);
-    // Display time remaining for each question in the #time-remaining div
-    $("#time-remaining").html("<h3>Time Remaining: <strong>" + decrement + "</strong></h3>"); // this may be redundant and cause problems but we'll see
-    // Console log for testing
-    console.log(decrement);
+
+        // Set decrement variable to 15 (seconds) for each question
+        decrement = 15;
+        // Assign the setInterval for the countdown function so it decrements 'decrement' every 1 second
+        timer = setInterval(countdown, 1000);
+        // Display time remaining for each question in the #time-remaining div
+        $("#time-remaining").html("<h3>Time Remaining: <strong>" + decrement + "</strong></h3>"); // this may be redundant and cause problems but we'll see
+        // Console log for testing
+        console.log(decrement);
     }
 }
 
@@ -190,7 +201,7 @@ function displayAnswer() {
     // Convert to an integer to use as an index
     correctAnswerIndex = parseInt(correctAnswerIndex);
     // Assign a variable to the text of the correct answer using the correct answer index in the respective nested array
-	var correctAnswerText = questionsArray[questionIndex][correctAnswerIndex];
+    var correctAnswerText = questionsArray[questionIndex][correctAnswerIndex];
     // Assign a variable to create an h2 tag highlighting the correct answer
     var correctAnswerDisplayed = $("<h2>").text("The correct answer was: " + correctAnswerText);
     // Append the h2 tags and correct answer to the #start div
