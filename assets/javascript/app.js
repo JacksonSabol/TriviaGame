@@ -17,7 +17,7 @@ var answersArray {
     questionOne: {
         correctAnswer: "4.6 billion years old",
         incorrectAnswers: ["10,000 years old", "4.6 million years old", "13.6 billion years old"]
-      },
+    },
     questionTwo: {
         correctAnswer: "93 million miles",
         incorrectAnswers: ["93 billion miles", "238,900 miles", "33.9 million miles"]
@@ -69,17 +69,45 @@ $("button").on("click", beginGame);
 
 // Function for the start of a new game
 function beginGame() {
-	// Reset the question index to the first question (index 0)
-	questionIndex = 0;
-	// Reset number of correctly/incorrectly answered questions to 0
-	correct = 0;
-	incorrect = 0;
-	// Clear the start box containing the instructions and 'Begin Game' button
-	$("#start").empty();
-	// Call the function for a new question
-	newQuestion();
+    // Reset the question index to the first question (index 0)
+    questionIndex = 0;
+    // Reset number of correctly/incorrectly answered questions to 0
+    correct = 0;
+    incorrect = 0;
+    // Clear the start box containing the instructions and 'Begin Game' button
+    $("#start").empty();
+    // Call the function for a new question
+    newQuestion();
 }
 
 function newQuestion() {
-    //
+    // Clear the start box if it contains the previous question
+    $("#start").empty();
+
+    // Set conditional to end the game for when all the questions have been completed
+    if (questionIndex === questionsArray.length) {
+        // Empty the #time-remaining div
+        $("#time-remaining").empty();
+        // Empty the #questions div
+        $("#questions").empty();
+        // Empty the #choices div
+        $("#choices").empty();
+
+        // Assign a variable to create an h2 tag with the end-of-game text
+        var endText = $("<h2>").text("Your Trivia Trials Are Complete!'");
+        // Assign a variable to create an h3 tag with a mildly relevant Carl Sagan quote
+        var endQuote = $("<h3>").text("'Somewhere, something incredible is waiting to be known.'");
+        // Assign a variable to create an h4 tag to display how many questions were answered correctly
+        var correctHFour = $("<h4>").text("You got " + correct + " questions right");
+        // Assign a variable to create an h4 tag to display how many questions were answered incorrectly
+        var incorrectHFour = $("<h4>").text("You got " + incorrect + " questions wrong");
+        // Assign a variable to create a button with the same class of .begin-game to retain the start buttons amazing styling, and the text of 'Play again?'
+        var playAgain = $("<button>").attr("class", "begin-game").text("Play again?");
+        // Append the newly created h tags, button, and text to the #start div box
+        $("#start").append(endText, endQuote, correctHFour, incorrectHFour, playAgain);
+    }
+    // Set else condition to create a new question with choices
+    else {
+        //
+    }
 }
