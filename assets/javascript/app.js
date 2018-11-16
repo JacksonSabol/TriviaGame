@@ -106,52 +106,41 @@ function newQuestion() {
         var incorrectHFour = $("<h4>").text("You got " + incorrect + " questions wrong");
         // Assign a variable to create a button with the same class of .begin-game to retain the start buttons amazing styling, and the text of 'Play again?'
         var playAgain = $("<button>").attr("class", "begin-game").text("Play again?");
+        // Put some space below the button
+        var spacer = "<br><br>";
         // Append the newly created h tags, button, and text to the #start div box
-        $("#start").append(endText, endQuote, correctHFour, incorrectHFour, playAgain);
+        $("#start").append(endText, endQuote, correctHFour, incorrectHFour, playAgain, spacer);
     }
     // Set else condition to create a new question with choices
     else {
+        // Empty the #questions div to clear placeholder text currently in HTML
+        $("#questions").empty();
+        // Empty the #choices div to clear placeholder text currently in HTML
+        $("#choices").empty();
         // Assign question variable to store result of incrementing index of the questions array - all of the questions are at index 0 of the nested arrays
         var question = questionsArray[questionIndex][0];
-        // Console log for testing
-        console.log(question);
         // Append question to the #question div
         $("#question").html("<h3>" + question + "</h3>");
 
-        // Concatenate the correct answer with the incorrect answers and assign it to a variable to be appended to the HTML 
-        // var answers = answersArray[questionIndex].correctAnswer + answersArray[questionIndex].incorrectAnswers[0] + answersArray[questionIndex].incorrectAnswers[1] + answersArray[questionIndex].incorrectAnswers[2];
-
-        // Clear #choices div to make room for new question choices
-        // $("#choices").empty();
         // Iterate through the nested arrays of the questionsArray, limiting the loop to indices that aren't the question or the correctAnswerIndex, to generate choices for the player
         for (var i = 1; i < (questionsArray[questionIndex].length - 1); i++) {
-            // Assign a variable to create a div for each answer choice with a unique 'value' - we can add an event listener to pull that value for comparison to the correctAnswerIndex later
-            // This just appends 'object Object' so I may  to try stringify
-            // var answers = $("<div>").attr("class", "choice-box", "value", i).text(questionsArray[questionIndex][i]);
+            // Creating a div to hold the buttons
+            var buttonDiv = $("<div id='button-holder" + i + "'>");
 
-            // Assign a variable to hold the answers we pull by iterating through the questionsArray
+            // Storing the choices data
             var answers = questionsArray[questionIndex][i];
-            // Console log answers for testing
-            console.log(answers);
 
-            // Console log shows that the choices are being assigned to the answers variable, but they're not being appended to the HTML, so gonna debug that after class
+            // Creating a button tag to have the choices displayed on
+            var buttonTag = $("<button>").attr("value", i).text(answers);
 
-            // Create variable to hold the choices information - this works but it puts them all in a line and doesn't replace the existing text because of using the append method
-            var newChoiceButton = $("<button>");
-            // Add a class
-            newChoiceButton.addClass("choice-button");
-            // Added a data-attribute
-            newChoiceButton.attr("data-name", questionsArray[questionIndex][i]);
-            // Provided the initial button text
-            newChoiceButton.text(questionsArray[questionIndex][i]);
-            // Added the button to the HTML
-            $("#choices").append(newChoiceButton);
+            // Appending the button tag to the new div
+            buttonDiv.append(buttonTag);
 
-            // Append the answers to divs with the choices to the #choices div with a class for styling and a value for the event listener
-            // $("#choices").html("<div class='choice-box' value='" + i + "'/>" + answers + "</div><br>");
+            // Put some space below the buttons
+            var spacerTwo = "<br>";
 
-            // Append our newly created divs and the choices to the #choices div with a class for styling
-            // $("#choices").append("<h3>" + answers + "</h3>");
+            // Appending the entire div to the HTML
+            $("#choices").append(buttonDiv, spacerTwo);
         };
 
         // Set decrement variable to 15 (seconds) for each question
@@ -160,8 +149,6 @@ function newQuestion() {
         timer = setInterval(countdown, 1000);
         // Display time remaining for each question in the #time-remaining div
         $("#time-remaining").html("<h3>Time Remaining: <strong>" + decrement + "</strong></h3>"); // this may be redundant and cause problems but we'll see
-        // Console log for testing
-        console.log(decrement);
     }
 }
 
