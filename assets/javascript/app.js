@@ -53,7 +53,7 @@ function newQuestion() {
         // Empty the #time-remaining div
         $("#time-remaining").empty();
         // Empty the #questions div
-        $("#questions").empty();
+        $("#question").empty();
         // Empty the #choices div
         $("#choices").empty();
 
@@ -65,8 +65,8 @@ function newQuestion() {
         var correctHFour = $("<h4>").text("You got " + correct + " questions right");
         // Assign a variable to create an h4 tag to display how many questions were answered incorrectly
         var incorrectHFour = $("<h4>").text("You got " + incorrect + " questions wrong");
-        // Assign a variable to create a button with the same class of .begin-game to retain the start buttons amazing styling, and the text of 'Play again?'
-        var playAgain = $("<button>").attr("class", "begin-game").text("Play again?");
+        // Assign a variable to create a button with the same class of .begin-game to retain the start buttons amazing styling, and the text of 'Play again?' - add onclick="beginGame()" to start game over again
+        var playAgain = $("<button>").attr({"class": "begin-game", "onclick": "beginGame()"}).text("Play again?");
         // Put some space below the button
         var spacer = "<br><br>";
         // Append the newly created h tags, button, and text to the #start div box
