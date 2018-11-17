@@ -216,3 +216,6 @@ function displayAnswer(answer) {
     // Automatically move to the next question after 4 seconds
     setTimeout(newQuestion, 4000);
 }
+
+// Link to updated Responsive Portfolio: https://jacksonsabol.github.io/Responsive-Portfolio/portfolio.html
+// Link to updated Bootstrap Portfolio: https://jacksonsabol.github.io/Bootstrap-Portfolio/portfolio.html
