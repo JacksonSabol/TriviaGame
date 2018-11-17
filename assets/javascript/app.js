@@ -140,21 +140,13 @@ function countdown() {
     }
 }
 
-// Event handler for user clicking a button-choice button i.e. making a choice on the DOM - this isn't working
-$(document).on("click", ".button-choice", submitAnswer);
 
 function submitAnswer(value) {
     // Preventing the button from trying to submit a form - this probably isn't necessary
     // event.preventDefault();
 
-    // Storing the 'value' of the button clicked
+    // Storing the 'value' the onclick of the button sends
     var submittedValue = parseInt(value);
-    // Console log for debugging - returns undefined
-    console.log(submittedValue);
-    // Make sure 'value' is an integer, not a string, for comparison to the correctAnswerIndex
-    // submittedValue = parseInt(submittedValue);
-    // Console log for testing - returns NaN
-    // console.log(submittedValue);
     // Assign the correctAnswerIndex to each, question-respective value - the index of the correct answer is always stored in the index 5 position of each nested array
     correctAnswerIndex = questionsArray[questionIndex][5];
     // Make sure this value is also an integer for comparison
@@ -207,11 +199,11 @@ function displayAnswer(answer) {
         // Tell player they answered correctly
         $("#question-over").html("<h2>Correct!</h2>");
         // Assign a variable to create an h2 tag highlighting the correct answer
-        var correctAnswerDisplayed = $("<h2>").text("You answered: " + correctAnswerText);
+        var correctAnswerDisplayed = $("<h2>").text("The correct answer was: " + correctAnswerText);
         // Append the h2 tags and correct answer to the #start div
         $("#start").append(correctAnswerDisplayed);
     }
-    if (choiceResponse === false) {
+    else if (choiceResponse === false) {
         // Tell player they answered incorrectly
         $("#question-over").html("<h2>Incorrect!</h2>");
         // Assign a variable to create an h2 tag highlighting the correct answer
