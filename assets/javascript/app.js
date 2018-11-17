@@ -14,50 +14,6 @@ var questionsArray = [
     ["Which one of Jupiter's moons has liquid water?", "Io", "Callisto", "Europa", "Elara", "3"] // Correct answer at index 3
 ];
 
-// Array of answers
-// var answersArray = {
-//     questionOne: {
-//         correctAnswer: ,
-//         incorrectAnswers: []
-//     },
-//     questionTwo: {
-//         correctAnswer: ,
-//         incorrectAnswers: []
-//     },
-//     questionThree: {
-//         correctAnswer: ,
-//         incorrectAnswers: []
-//     },
-//     questionFour: {
-//         correctAnswer: ,
-//         incorrectAnswers: []
-//     },
-//     questionFive: {
-//         correctAnswer: ,
-//         incorrectAnswers: []
-//     },
-//     questionSix: {
-//         correctAnswer: ,
-//         incorrectAnswers: []
-//     },
-//     questionSeven: {
-//         correctAnswer: ,
-//         incorrectAnswers: []
-//     },
-//     questionEight: {
-//         correctAnswer: ,
-//         incorrectAnswers: []
-//     },
-//     questionNine: {
-//         correctAnswer: ,
-//         incorrectAnswers: []
-//     },
-//     questionTen: {
-//         correctAnswer: ,
-//         incorrectAnswers: []
-//     }
-// };
-
 // Assign tracking variables
 var questionIndex;
 var correctAnswerIndex;
@@ -131,7 +87,7 @@ function newQuestion() {
             var answers = questionsArray[questionIndex][i];
 
             // Creating a button tag to have the choices displayed on
-            var buttonTag = $("<button>").attr("value", i).text(answers);
+            var buttonTag = $("<button>").attr({ "class": "choice-button", "value": i }).text(answers);
 
             // Appending the button tag to the new div
             buttonDiv.append(buttonTag);
@@ -177,6 +133,56 @@ function countdown() {
         // Call function to display the answer
         displayAnswer();
     }
+}
+
+// Event handler for user clicking a button-choice button i.e. making a choice on the DOM
+$(document).on("click", ".button-choice", submitAnswer);
+
+function submitAnswer() {
+    // Preventing the button from trying to submit a form - this probably isn't necessary
+    // event.preventDefault();
+
+    // Storing the 'value' of the button clicked
+    var submittedValue = $(this).attr("value");
+    // Make sure 'value' is an integer, not a string, for comparison to the correctAnswerIndex
+    submittedValue = parseInt(submittedValue);
+    // Assign the correctAnswerIndex to each, question-respective value - the index of the correct answer is always stored in the index 5 position of each nested array
+    correctAnswerIndex = questionsArray[questionIndex][5];
+    // Make sure this value is also an integer for comparison
+    correctAnswerIndex = parseInt(correctAnswerIndex);
+    // Clear the interval to stop running the countdown function
+    clearInterval(timer);
+
+    // Set conditions for correctly versus incorrectly answered questions
+    if (submittedValue == correctAnswerIndex) {
+        // Player answered correctly, increment the number answered correctly by 1
+        correct++;
+        // Empty the #time-remaining div
+        $("#time-remaining").empty();
+        // Empty the #questions div
+        $("#questions").empty();
+        // Empty the #choices div
+        $("#choices").empty();
+        // Tell player they got it right
+        $("#question-over").text("CORRECT! ");
+        // Call displayAnswer function to automatically move to next question after 4 seconds
+        displayAnswer();
+    }
+    else {
+        // Player answered incorrectly, increment the number answered incorrectly by 1
+        incorrect++;
+        // Empty the #time-remaining div
+        $("#time-remaining").empty();
+        // Empty the #questions div
+        $("#questions").empty();
+        // Empty the #choices div
+        $("#choices").empty();
+        // Tell player they got it wrong
+        $("#question-over").text("WRONG! ");
+        // Call displayAnswer function to automatically move to next question after 4 seconds
+        displayAnswer();
+    }
+
 }
 
 // Function to display the correct answer
