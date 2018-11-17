@@ -1,6 +1,5 @@
-// Array of questions
-// Change to nested arrays of questions and answers with the index location of the correct answer listed at the fifth index
-// This will allow me to have different locations for the correct answer when generating the question/answers later
+// Nested arrays of questions and answers with the index location of the correct answer listed at the fifth index
+// This will allow us to have different locations for the correct answer when generating the question/answers later
 var questionsArray = [
     ["How old is our solar system?", "10,000 years old", "4.6 billion years old", "4.6 million years old", "13.6 billion years old", "2"], // Correct answer at index 2
     ["How far away is the Earth from the Sun?", "93 billion miles", "238,900 miles", "33.9 million miles", "93 million miles", "4"], // Correct answer at index 4
@@ -21,9 +20,6 @@ var decrement;
 var timer;
 var correct = 0;
 var incorrect = 0;
-
-// Testing to see if this resolves event listener issues on dynamically created elements for submitAnswer function - it didn't
-// $(document).ready(function () {
 
 // Set listener for the click of the 'Begin Game' button to execute the beginGame function
 $(".begin-game").on("click", beginGame);
@@ -65,7 +61,7 @@ function newQuestion() {
         var correctHFour = $("<h4>").text("You got " + correct + " questions right");
         // Assign a variable to create an h4 tag to display how many questions were answered incorrectly
         var incorrectHFour = $("<h4>").text("You got " + incorrect + " questions wrong");
-        // Assign a variable to create a button with the same class of .begin-game to retain the start buttons amazing styling, and the text of 'Play again?' - add onclick="beginGame()" to start game over again
+        // Assign a variable to create a button with the same class of .begin-game to retain the start button's styling, and the text of 'Play again?' - add onclick="beginGame()" to start game over again
         var playAgain = $("<button>").attr({"class": "begin-game", "onclick": "beginGame()"}).text("Play again?");
         // Put some space below the button
         var spacer = "<br><br>";
@@ -74,9 +70,9 @@ function newQuestion() {
     }
     // Set else condition to create a new question with choices
     else {
-        // Empty the #questions div to clear placeholder text currently in HTML
+        // Empty the #questions div
         $("#questions").empty();
-        // Empty the #choices div to clear placeholder text currently in HTML
+        // Empty the #choices div
         $("#choices").empty();
         // Assign question variable to store result of incrementing index of the questions array - all of the questions are at index 0 of the nested arrays
         var question = questionsArray[questionIndex][0];
@@ -109,11 +105,11 @@ function newQuestion() {
         // Assign the setInterval for the countdown function so it decrements 'decrement' every 1 second
         timer = setInterval(countdown, 1000);
         // Display time remaining for each question in the #time-remaining div
-        $("#time-remaining").html("<h3>Time Remaining: <strong>" + decrement + "</strong></h3>"); // this may be redundant and cause problems but we'll see
+        $("#time-remaining").html("<h3>Time Remaining: <strong>" + decrement + "</strong></h3>");
     }
 }
 
-// Function set a time limit of 15 seconds on each question
+// Function to set a time limit of 15 seconds on each question
 function countdown() {
     // Decrement the counting variable 'decrement'
     decrement--;
@@ -140,12 +136,9 @@ function countdown() {
     }
 }
 
-
+// Function to parse out which button was clicked i.e. which answer was chosen by the player
 function submitAnswer(value) {
-    // Preventing the button from trying to submit a form - this probably isn't necessary
-    // event.preventDefault();
-
-    // Storing the 'value' the onclick of the button sends
+    // Storing the 'value' passed by the 'onclick=' of a button
     var submittedValue = parseInt(value);
     // Assign the correctAnswerIndex to each, question-respective value - the index of the correct answer is always stored in the index 5 position of each nested array
     correctAnswerIndex = questionsArray[questionIndex][5];
@@ -186,7 +179,7 @@ function submitAnswer(value) {
 function displayAnswer(answer) {
     // Assign variable to hold true or false passed from submitAnswer function
     var choiceResponse = answer;
-    // Clear the #time-remaining div for when this function is called from a correct choice - I may just make a separate function for this to stop the timer like in the demo as opposed to clearing it
+    // Clear the #time-remaining div for when this function is called from a correct choice
     $("#time-remaining").empty();
     // Reassign the correctAnswerIndex variable to be equal to the correct answer for the corresponding question - the index location inside of each nested array indicating the index location of the correct answer is always at index 5
     correctAnswerIndex = questionsArray[questionIndex][5];
@@ -198,19 +191,20 @@ function displayAnswer(answer) {
     if (choiceResponse === true) {
         // Tell player they answered correctly
         $("#question-over").html("<h2>Correct!</h2>");
-        // Assign a variable to create an h2 tag highlighting the correct answer
-        var correctAnswerDisplayed = $("<h2>").text("The correct answer was: " + correctAnswerText);
-        // Append the h2 tags and correct answer to the #start div
+        // Assign a variable to create an h3 tag highlighting the correct answer
+        var correctAnswerDisplayed = $("<h3>").text("The correct answer was: " + correctAnswerText);
+        // Append the h3 tags and correct answer to the #start div
         $("#start").append(correctAnswerDisplayed);
     }
     else if (choiceResponse === false) {
         // Tell player they answered incorrectly
         $("#question-over").html("<h2>Incorrect!</h2>");
-        // Assign a variable to create an h2 tag highlighting the correct answer
-        var correctAnswerDisplayed = $("<h2>").text("The correct answer was: " + correctAnswerText);
-        // Append the h2 tags and correct answer to the #start div
+        // Assign a variable to create an h3 tag highlighting the correct answer
+        var correctAnswerDisplayed = $("<h3>").text("The correct answer was: " + correctAnswerText);
+        // Append the h3 tags and correct answer to the #start div
         $("#start").append(correctAnswerDisplayed);
     }
+    // Player did not answer in time
     else {
         // Assign a variable to create an h2 tag highlighting the correct answer
         var correctAnswerDisplayed = $("<h2>").text("The correct answer was: " + correctAnswerText);
