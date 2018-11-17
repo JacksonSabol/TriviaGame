@@ -86,8 +86,8 @@ function newQuestion() {
             // Storing the choices data
             var answers = questionsArray[questionIndex][i];
 
-            // Creating a button tag to have the choices displayed on
-            var buttonTag = $("<button>").attr({ "class": "choice-button", "value": i }).text(answers);
+            // Creating a button tag to have the choices displayed on - add 'onclick="submitAnswer()"' to see if that solves the problem of using an event listener for dynamically created elements
+            var buttonTag = $("<button>").attr({ "class": "choice-button", "onclick": "submitAnswer()", "value": i}).text(answers);
 
             // Appending the button tag to the new div
             buttonDiv.append(buttonTag);
@@ -135,8 +135,8 @@ function countdown() {
     }
 }
 
-// Event handler for user clicking a button-choice button i.e. making a choice on the DOM
-$(document).on("click", ".button-choice", submitAnswer);
+// Event handler for user clicking a button-choice button i.e. making a choice on the DOM - this isn't working
+// $(document).on("click", ".button-choice", submitAnswer);
 
 function submitAnswer() {
     // Preventing the button from trying to submit a form - this probably isn't necessary
@@ -144,8 +144,12 @@ function submitAnswer() {
 
     // Storing the 'value' of the button clicked
     var submittedValue = $(this).attr("value");
+    // Console log for debugging - returns undefined
+    console.log(submittedValue);
     // Make sure 'value' is an integer, not a string, for comparison to the correctAnswerIndex
     submittedValue = parseInt(submittedValue);
+    // Console log for testing - returns NaN
+    console.log(submittedValue);
     // Assign the correctAnswerIndex to each, question-respective value - the index of the correct answer is always stored in the index 5 position of each nested array
     correctAnswerIndex = questionsArray[questionIndex][5];
     // Make sure this value is also an integer for comparison
