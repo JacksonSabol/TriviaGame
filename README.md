@@ -1,6 +1,6 @@
 # Welcome to a Cosmology Trivia Game!
 
-## The following project is Assignment 5 of the UCB Full Stack Coding Bootcamp
+## The following project is Cosmology-themed, timed trivia game
 
 ### Overview
 
